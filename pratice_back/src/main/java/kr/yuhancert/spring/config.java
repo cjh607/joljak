@@ -1,4 +1,4 @@
-package com.example.pratice_back;
+package kr.yuhancert.spring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

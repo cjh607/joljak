@@ -1,5 +1,6 @@
-package com.example.pratice_back;
+package kr.yuhancert.spring;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Entity
 @Table(name = "dept_map")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class DeptMap {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dept_map_id_gen")
@@ -19,7 +21,17 @@ public class DeptMap {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "department_id")
     private Department department;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "major_id")
+    private Major major;
 
 }

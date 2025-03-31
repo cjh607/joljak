@@ -1,13 +1,13 @@
-package com.example.pratice_back;
+package kr.yuhancert.spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PraticeBackApplicationTests {
+class YcsCertificateSpringApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }

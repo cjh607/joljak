@@ -1,32 +1,29 @@
-import { useEffect, useState } from 'react'
-
+import { useEffect, useState } from 'react';
+import './App.css';
 import axios from 'axios';
 
-const App=()=> {
-    // 자격증 정보를 객체로 저장
-    const [data, setdata] = useState<{ id: number; name: string }[]>([]);
+function App() {
+    const [depart, setDepart] = useState([]);
+    let name : string[] = ["hhihi","nynyyn"];
+
     useEffect(() => {
-        axios.get<{ id: number; name: string }[]>('http://localhost:8080/api/data')
-            .then((response)=>{
-                console.log("받음:",response.data);
-                setdata(response.data);
+        axios
+            .get('http://localhost:8080/api')
+            .then((response) => {
+                console.log(response.data);
+                setDepart(response.data);
             })
-            .catch();
+            .catch((error) => console.log(error));
     }, []);
+
     return (
         <div>
-        <h1>12222222</h1>
-            <h2>
-                
-            </h2>
+            <h1>Departments</h1>
             <ul>
-                {data.map(depart => (
-                    <h3 key={depart.id}>{depart.id}, {depart.name}</h3>
+                {depart.department.map(dept => (
+                    <li key={dept.id}>{dept.id} {dept.departmentName}</li>
                 ))}
-
             </ul>
-
-
         </div>
     );
 }
