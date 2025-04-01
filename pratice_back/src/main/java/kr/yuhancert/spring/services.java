@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import kr.yuhancert.spring.Repository.Depart_Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class services {
@@ -21,13 +23,39 @@ public class services {
     @Autowired
     public Major_Repository major_Repository;
 
-    public DtoTable getAlldata(){
-        List<Department> departments = depart_Repository.findAll();
-        List<DeptMap> deptmaps = deptmap_Repository.findAll();
-        List<Faculty> faculties = faculty_Repository.findAll();
-        List<Major> majors = major_Repository.findAll();
-        return new DtoTable (departments,deptmaps,faculties,majors);
+    public List<DtoTable> dtoMapping() {
+        List<DeptMap> deptMapList = deptmap_Repository.findAll();
+
+        return deptMapList.stream().map(deptMap -> {
+            Faculty faculty = null;
+            Department department = null;
+            Major major = null;
+            String a = "",b="",c="";
+
+            if (deptMap.getFaculty() != null) {
+                faculty = faculty_Repository.findById(deptMap.getFaculty()).orElse(null);
+                a= faculty.getFacultyName();
+            }
+
+            if (deptMap.getDepartment() != null) {
+                department = depart_Repository.findById(deptMap.getDepartment()).orElse(null);
+                b= department.getDepartmentName();
+            }
+
+            if (deptMap.getMajor() != null) {
+                major = major_Repository.findById(deptMap.getMajor()).orElse(null);
+                c= major.getMajorName();
+            }
+
+            return new DtoTable(
+                    deptMap.getId(), a, b, c
+            );
+        }).collect(Collectors.toList());
+
     }
+
+
+
 
     public List<Department> getdepartment(){
         return depart_Repository.findAll();

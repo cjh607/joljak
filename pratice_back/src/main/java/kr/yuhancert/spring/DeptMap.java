@@ -19,19 +19,16 @@ public class DeptMap {
     @Column(name = "dept_map_id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "faculty_id")
-    private Faculty faculty;
+    private Long faculty;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "department_id")
-    private Department department;
+    private Long department;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "major_id")
-    private Major major;
+    private Long major;
 
 }
