@@ -16,11 +16,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class DtoTable {
-    private Long id;
-    private String departmentName;
-    private String facultyName;
-    private String majorName;
+    private int id;
+    private String tableName;
+    private String Value;
+    private List<DTOChildTable> childTableName;
 
-    public DtoTable(Long id, @NotNull String facultyName, @NotNull String departmentName, @NotNull String majorName) {
+    public DtoTable(int i, String faculty, String value, List<DTOChildTable> dtoChildTables) {
+        this.id = i;
+        this.tableName = faculty;
+        this.Value = value;
+        this.childTableName = dtoChildTables;
     }
 }

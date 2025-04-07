@@ -19,16 +19,22 @@ public class DeptMap {
     @Column(name = "dept_map_id", nullable = false)
     private Long id;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "faculty_id")
+    @Column(name = "faculty_id")
     private Long faculty;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "department_id")
+    @Column(name = "department_id")
     private Long department;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "major_id")
+    @Column(name = "major_id")
     private Long major;
+
+    @Column(name = "department")
+    private Long department2;
+
+    @Column(name = "faculty")
+    private Long faculty2;
+
+    @Column(name = "major")
+    private Long major2;
 
 }

@@ -1,5 +1,6 @@
 package kr.yuhancert.spring;
 
+import kr.yuhancert.spring.DTO.DTOChildTable;
 import kr.yuhancert.spring.DTO.DtoTable;
 import kr.yuhancert.spring.Department;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,13 @@ public class control {
     @Autowired
     public services service;
 
+    @GetMapping("/test")
+    public List<DTOChildTable> getDTOd() { return service.setDtoChildTables(); }
+
     @GetMapping("/api")
-    public ResponseEntity<List<DtoTable>> getallData() {
-        List<DtoTable> dtoTableList = service.dtoMapping();
-        return ResponseEntity.ok(dtoTableList);
-    }
+    public List<DtoTable> getDTO() { return service.setDtoTable(); }
 
     @GetMapping("/apiS")
-    public List<Department> getdepartment() {
-        return service.getdepartment();
-    }
+    public List<DeptMap> getdepartment() { return service.getdeptmap(); }
 
 }

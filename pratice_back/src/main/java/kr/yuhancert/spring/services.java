@@ -1,5 +1,6 @@
 package kr.yuhancert.spring;
 
+import kr.yuhancert.spring.DTO.DTOChildTable;
 import kr.yuhancert.spring.DTO.DtoTable;
 import kr.yuhancert.spring.Repository.Deptmap_Repository;
 import kr.yuhancert.spring.Repository.Faculty_Repository;
@@ -10,6 +11,7 @@ import kr.yuhancert.spring.Repository.Depart_Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,38 +24,46 @@ public class services {
     public Faculty_Repository faculty_Repository;
     @Autowired
     public Major_Repository major_Repository;
+    public DtoTable dtoTable;
+    public DTOChildTable dtoChildTable;
+    List<DtoTable> dtoTables = new ArrayList<>();
+    List<DTOChildTable> dtoChildTables = new ArrayList<>();
 
-    public List<DtoTable> dtoMapping() {
-        List<DeptMap> deptMapList = deptmap_Repository.findAll();
+    public List<DTOChildTable> setDtoChildTables() {
+        int j =1;
+        List<DeptMap> deptfacluty = deptmap_Repository.findAll();
+            for (int k=1; k<6; k++) {
 
-        return deptMapList.stream().map(deptMap -> {
-            Faculty faculty = null;
-            Department department = null;
-            Major major = null;
-            String a = "",b="",c="";
-
-            if (deptMap.getFaculty() != null) {
-                faculty = faculty_Repository.findById(deptMap.getFaculty()).orElse(null);
-                a= faculty.getFacultyName();
+                Long finalK = (long) k;
+                List<DeptMap> result = deptfacluty.stream()
+                        .filter(n -> n.getFaculty() == finalK)
+                        .collect(Collectors.toList());
+                for (DeptMap deptmap : result) {
+                    Long a = deptmap.getDepartment();
+                    Long b = deptmap.getMajor();
+                    Optional<Department> c = depart_Repository.findById(a);
+                    if (b == null) {
+                        continue;
+                    }
+                    Optional<Major> d = major_Repository.findById(b);
+                    String e = c.get().getDepartmentName();
+                    String f = d.get().getMajorName();
+                    dtoChildTables.add(new DTOChildTable(j, e, f));
+                    j++;
+                }
             }
 
-            if (deptMap.getDepartment() != null) {
-                department = depart_Repository.findById(deptMap.getDepartment()).orElse(null);
-                b= department.getDepartmentName();
-            }
-
-            if (deptMap.getMajor() != null) {
-                major = major_Repository.findById(deptMap.getMajor()).orElse(null);
-                c= major.getMajorName();
-            }
-
-            return new DtoTable(
-                    deptMap.getId(), a, b, c
-            );
-        }).collect(Collectors.toList());
-
+        return dtoChildTables;
     }
-
+    public List<DtoTable> setDtoTable(){
+        for (int i=1; i<6; i++){
+            // i 는 dtotable 의 키값이 됨.
+            Optional<Faculty> a = faculty_Repository.findById((long) i);//1번쨰에 해당하는 facluty_name 가져오기
+            String b = a.get().getFacultyName();
+            dtoTables.add(new DtoTable(i,"Faculty",b,dtoChildTables)); // dtotables 리스트에 키값,테이블이름,값,자식리스트 값을 집어넣음.
+        }
+        return dtoTables;
+    }
 
 
 
@@ -65,4 +75,5 @@ public class services {
     public List<Major> getmajor() {return major_Repository.findAll();}
 
 }
+
 

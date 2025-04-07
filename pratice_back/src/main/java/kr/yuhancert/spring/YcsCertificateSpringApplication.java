@@ -10,11 +10,8 @@ public class YcsCertificateSpringApplication {
 	public static void main(String[] args) {
 
 		SpringApplication app = new SpringApplication(YcsCertificateSpringApplication.class);
-
 		app.run(args);
 
-
-		System.out.println("dd");
 
 
 
