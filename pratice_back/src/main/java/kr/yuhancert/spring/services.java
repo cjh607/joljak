@@ -30,6 +30,7 @@ public class services {
     List<DTOChildTable> dtoChildTables = new ArrayList<>();
 
     public List<DTOChildTable> setDtoChildTables() {
+        dtoChildTables = [];
         int j =1;
         List<DeptMap> deptfacluty = deptmap_Repository.findAll();
             for (int k=1; k<6; k++) {
