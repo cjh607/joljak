@@ -57,6 +57,7 @@ public class services {
         return dtoChildTables;
     }
     public List<DtoTable> setDtoTable(){
+        dtoTables.clear();
         for (int i=1; i<6; i++){
             // i 는 dtotable 의 키값이 됨.
             Optional<Faculty> a = faculty_Repository.findById((long) i);//1번쨰에 해당하는 facluty_name 가져오기
